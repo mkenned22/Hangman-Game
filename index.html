@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    <title>Hangman</title>
+    
+</head>
+<body>
+    <header></header>
+    <section>
+        <div id="intro"></div>
+    </section>
+    <footer></footer>
+    
+
+
+
+    <script>
+        var word = 'hangman';
+        displayWord = document.getElementById('intro');
+        displayWord.innerHTML = '_'.repeat(word.length);
+
+        document.onkeyup = function(event) {
+            var keyCode = event.keyCode;
+            var key = event.key;
+
+            if (keyCode >= 65 && keyCode <= 90){
+
+                var index = word.indexOf(key);
+                var tempWord = displayWord.innerHTML;
+                if(index >=0){
+                    displayWord.innerHTML = tempWord.substr(0, index) + key+ tempWord.substr(index + key.length);
+                };
+            };
+
+                alert("input was a-z");
+                
+            };
+    
+    
+    
+    </script>
+</body>
+</html>

@@ -11,7 +11,8 @@
 <body>
     <header></header>
     <section>
-        <div id="intro"></div>
+        <div id="hiddenWord"></div>
+        <div id="wrongGuesses">Incorrect Guesses:</div>
     </section>
     <footer></footer>
     
@@ -20,25 +21,32 @@
 
     <script>
         var word = 'hangman';
-        displayWord = document.getElementById('intro');
+        var displayWord = document.getElementById('hiddenWord');
+        var wrongGuesses = document.getElementById('wrongGuesses');
         displayWord.innerHTML = '_'.repeat(word.length);
 
         document.onkeyup = function(event) {
             var keyCode = event.keyCode;
             var key = event.key;
 
-            if (keyCode >= 65 && keyCode <= 90){
-
-                var index = word.indexOf(key);
+            if(keyCode >= 65 && keyCode <= 90){
                 var tempWord = displayWord.innerHTML;
+                var index = word.indexOf(key);
                 if(index >=0){
-                    displayWord.innerHTML = tempWord.substr(0, index) + key+ tempWord.substr(index + key.length);
-                };
-            };
-
-                alert("input was a-z");
+                    for(i=0;i<word.length;i++){
+                        if(word.charAt(i) === key){
+                            displayWord.innerHTML = tempWord.substr(0, i) + key+ tempWord.substr(i + 1);
+                            var tempWord = displayWord.innerHTML;
+                        }
+                    }
+                }
+                else{
+                wrongGuesses.innerHTML+= "<p>" + key + "</p>";
+            }
+            }
+            
                 
-            };
+        };
     
     
     

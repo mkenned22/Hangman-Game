@@ -5,17 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
     <title>Hangman</title>
     
 </head>
 <body>
-    <header></header>
+        <header>
+                <nav class="navbar navbar-default">
+                    <a class="navbar-brand" href="index.html">
+                        <span>
+                            <img class="mcpklogo" src="assets/imgs/mcpklogo.png" width="45" height="45" alt="">
+                        </span>
+                    </a>
+                    <a href="index.html">
+                        <button class="btn btn-default btn-lg dropdown-toggle mikehomebutton" type="button">
+        
+                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        </button>
+                    </a>
+                    <div class="dropdown-container">
+                        <button class="btn btn-default btn-lg dropdown-toggle mikemenubutton" type="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="about.html">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;About Me</a>
+                            </li>
+                            <li>
+                                <a href="portfolio.html">
+                                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;Portfolio</a>
+                            </li>
+                            <li>
+                                <a href="contact.html">
+                                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;Contact</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="index.html">
+                                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;Home</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </header>
     <section>
         <div class="container">
             <div class="row">
+                <div class="col-md-12">
+                    <h1>Let's Play Hangman!</h1>
+                </div>
+            </div>
+            <div class="row">
                 <div class= "col-md-8">
-                    <div class="jumbotron">
+                    <div class="jumbotron myJumbotron">
                         <h1 id="hiddenWord"></h1>
                         <p><strong>Hint: </strong><span id="hint"></span></p>
                         <p><strong>Guesses Remaining: </strong><span id="remainingGuesses"></span></p>
@@ -48,10 +95,16 @@
     <script>
         
         var words = {
-            1 : { word: 'hangman', description: 'name of the game'},
-            2 : { word: 'hangmanhangman', description : 'name of the game 2x'},
-            3 : { word: 'hangmanhangmanhangman', description : 'name of the game 3x'}
+            1 : { word: 'rottweiler', description: 'Type of Dog', url: 'assets/images/rottweiler.jpg', mp3: 'assets/images/barking.mp3'},
+            2 : { word: 'beagle', description : 'Type of Dog', url: 'assets/images/beagle.jpg', mp3: 'assets/images/barking.mp3'},
+            3 : { word: 'bulldog', description : 'Type of Dog', url: 'assets/images/bulldog.jpg', mp3: 'assets/images/barking.mp3'},
+            4 : { word: 'poodle', description : 'Type of Dog', url: 'assets/images/poodle.jpg', mp3: 'assets/images/barking.mp3'},
+            5 : { word: 'doberman', description : 'Type of Dog', url: 'assets/images/doberman.jpg', mp3: 'assets/images/barking.mp3'},
+            6 : { word: 'chihuahua', description : 'Type of Dog', url: 'assets/images/chihuahua.jpeg', mp3: 'assets/images/barking.mp3'},
+            7 : { word: 'boxer', description : 'Type of Dog', url: 'assets/images/boxer.jpg', mp3: 'assets/images/barking.mp3'}
         };
+
+        
 
         var images = {
             1: "assets/images/hangman-10.png",
@@ -66,34 +119,29 @@
             10: "assets/images/hangman-1.png"
         }
 
+        var alphabet = ["Q","W","E","R","T","Y","U","I","O","P","A","S","D","F","G","H","J","K","L","Z","X","C","V","B","N","M"];
         var wordArray  = Object.keys(words);
         var wordIndex  = Math.floor(Math.random() * wordArray.length);
         var randomKey    = wordArray[wordIndex];
+
         var randomWord  = words[randomKey]; 
-
-        var displayWord = document.getElementById('hiddenWord');
-        displayWord.innerHTML = '_'.repeat(randomWord.word.length);
-
-        var hint = document.getElementById('hint');
-        hint.innerHTML = randomWord.description
-        
-        var remainingGuesses = document.getElementById('remainingGuesses');  
         var remainingGuessValue = 10;
-        remainingGuesses.innerHTML = remainingGuessValue.toString();
-
-        var wrongGuesses = document.getElementById('wrongGuesses');
         var lettersAlreadyGuessed = [];
+
+        document.getElementById('hiddenWord').innerHTML = '_'.repeat(randomWord.word.length);
+        document.getElementById('hint').innerHTML = randomWord.description
+        document.getElementById('remainingGuesses').innerHTML = remainingGuessValue.toString();
+
         
-        var alphabet = ["Q","W","E","R","T","Y","U","I","O","P","A","S","D","F","G","H","J","K","L","Z","X","C","V","B","N","M"];
-        var keyboard = document.getElementById('keyboard');
+        
         alphabet.forEach(function(event){
             html = "<button id=" + event.toLowerCase() + ' class="btn btn-default" onclick=letterPressed(' + '"' + event.toLowerCase() +'"' + ')>' + event + "</button>";
-            keyboard.innerHTML += html;
+            document.getElementById('keyboard').innerHTML += html;
             if(event === 'P'){
-                keyboard.innerHTML += "<br>";
+                document.getElementById('keyboard').innerHTML += "<br>";
             }
             else if(event === 'L'){
-                keyboard.innerHTML += "<br>";
+                document.getElementById('keyboard').innerHTML += "<br>";
             }
         });
 
@@ -107,19 +155,23 @@
                 if(randomWord.word.indexOf(letter) >=0){
                     for(i=0;i<randomWord.word.length;i++){
                         if(randomWord.word.charAt(i) === letter){
-                            var tempWord = displayWord.innerHTML;
-                            displayWord.innerHTML = tempWord.substr(0, i) + letter+ tempWord.substr(i + 1);
+                            var tempWord = document.getElementById('hiddenWord').innerHTML;
+                            document.getElementById('hiddenWord').innerHTML = tempWord.substr(0, i) + letter+ tempWord.substr(i + 1);
                         }
                     }
                     // you win :(
-                    if(displayWord.innerHTML.indexOf('_') === -1){
+                    if(document.getElementById('hiddenWord').innerHTML.indexOf('_') === -1){
                         alert("You win!");
+                        document.getElementById("hangman-img").src= randomWord.url;
+                        var audio = new Audio(randomWord.mp3);
+                        audio.play();
+
                     }
                 }
                 // incorrect guess :(
                 else{
 
-                    wrongGuesses.innerHTML+= "<span>" + letter + " </span>";
+                    document.getElementById('wrongGuesses').innerHTML+= "<span>" + letter + " </span>";
                     remainingGuessValue--;
                     
                     remainingGuesses.innerHTML = remainingGuessValue.toString();
@@ -128,6 +180,7 @@
                     // you lose :(
                         if(remainingGuessValue === 0){
                         alert("You Lose!");
+                        document.getElementById('hiddenWord').innerHTML = randomWord.word;
                     }
                 }
 

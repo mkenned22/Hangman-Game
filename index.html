@@ -109,19 +109,32 @@
         
         document.onkeydown = function(e) {
             var key = e.key;
-            var keyCode = e.keyCode;    
-            if(keyCode >= 65 && keyCode <= 90){
-                document.getElementById(e.key).style.color = "red";
+            var keyCode = e.keyCode; 
+
+            if(event.shiftKey){
+                var key = e.key.toLowerCase();
+            }
+            else{
+                var key = e.key;
+            }
+
+            if((keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122)){
+                document.getElementById(key).style.color = "red";
             }
         };
         
         // keyboard event registered
         document.onkeyup = function(event) {
             var keyCode = event.keyCode;
-            var key = event.key;
+            if(event.shiftKey){
+                var key = event.key.toLowerCase();
+            }
+            else{
+                var key = event.key;
+            }
             
             // keyboard event is a letter 
-            if(keyCode >= 65 && keyCode <= 90){
+            if((keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122)){
                 letterPressed(key); 
             }  
         }

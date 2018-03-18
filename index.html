@@ -5,21 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <title>Hangman</title>
     
 </head>
 <body>
     <header></header>
     <section>
-        <div id="hiddenWord">
+        <div class="container">
+            <div class="row">
+                <div class= "col-md-8">
+                    <div class="jumbotron">
+                        <h1 id="hiddenWord"></h1>
+                        <p><strong>Hint: </strong><span id="hint"></span></p>
+                        <p><strong>Guesses Remaining: </strong><span id="remainingGuesses"></span></p>
+                        <p id="wrongGuesses"><strong>Incorrect Guesses: </strong></p>
+                    </div>
+                </div>
+                <div class= "col-md-4">
+                        <div>
+                           <img id="hangman-img" src="assets/images/hangman-0.png">
+                        </div>
+                    </div>
+            </div>
+            <div class="row">
+                <div class= "col-md-12">
+                    <div id="keyboard"></div>
 
+                </div>
+            </div>
         </div>
-        <div>Hint: <span id="hint"></span> </div>
-        <div id="wrongGuesses">Incorrect Guesses:</div>
-        <div>Guesses Remaining:
-            <span id="remainingGuesses"></span>   
-        </div>
-        <div id="keyboard"></div>
+            
+        <div> </div>
+        
+        
     </section>
     <footer></footer>
     
@@ -34,6 +53,19 @@
             3 : { word: 'hangmanhangmanhangman', description : 'name of the game 3x'}
         };
 
+        var images = {
+            1: "assets/images/hangman-10.png",
+            2: "assets/images/hangman-9.png",
+            3: "assets/images/hangman-8.png",
+            4: "assets/images/hangman-7.png",
+            5: "assets/images/hangman-6.png",
+            6: "assets/images/hangman-5.png",
+            7: "assets/images/hangman-4.png",
+            8: "assets/images/hangman-3.png",
+            9: "assets/images/hangman-2.png",
+            10: "assets/images/hangman-1.png"
+        }
+
         var wordArray  = Object.keys(words);
         var wordIndex  = Math.floor(Math.random() * wordArray.length);
         var randomKey    = wordArray[wordIndex];
@@ -46,7 +78,7 @@
         hint.innerHTML = randomWord.description
         
         var remainingGuesses = document.getElementById('remainingGuesses');  
-        var remainingGuessValue = 8;
+        var remainingGuessValue = 10;
         remainingGuesses.innerHTML = remainingGuessValue.toString();
 
         var wrongGuesses = document.getElementById('wrongGuesses');
@@ -55,7 +87,7 @@
         var alphabet = ["Q","W","E","R","T","Y","U","I","O","P","A","S","D","F","G","H","J","K","L","Z","X","C","V","B","N","M"];
         var keyboard = document.getElementById('keyboard');
         alphabet.forEach(function(event){
-            html = "<button id=" + event.toLowerCase() + ' class="letter-button" onclick=letterPressed(' + '"' + event.toLowerCase() +'"' + ')>' + event + "</button>";
+            html = "<button id=" + event.toLowerCase() + ' class="btn btn-default" onclick=letterPressed(' + '"' + event.toLowerCase() +'"' + ')>' + event + "</button>";
             keyboard.innerHTML += html;
             if(event === 'P'){
                 keyboard.innerHTML += "<br>";
@@ -86,10 +118,13 @@
                 }
                 // incorrect guess :(
                 else{
-                    wrongGuesses.innerHTML+= "<p>" + letter + "</p>";
-                    remainingGuessValue--;
-                    remainingGuesses.innerHTML = remainingGuessValue.toString();
 
+                    wrongGuesses.innerHTML+= "<span>" + letter + " </span>";
+                    remainingGuessValue--;
+                    
+                    remainingGuesses.innerHTML = remainingGuessValue.toString();
+                    document.getElementById("hangman-img").src= images[remainingGuessValue+1];
+                    
                     // you lose :(
                         if(remainingGuessValue === 0){
                         alert("You Lose!");

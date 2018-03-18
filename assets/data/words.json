@@ -1,7 +1,0 @@
-{
-    "words":[
-        {"word":"John", "description":"Doe"}, 
-        {"word":"Anna", "description":"Smith"},
-        {"word":"Peter", "description":"Jones"}
-    ]
-}

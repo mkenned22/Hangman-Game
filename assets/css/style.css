@@ -1,3 +1,18 @@
 #hiddenWord{
     letter-spacing: 10px;
 }
+#keyboard{
+    text-align: center;
+}
+button{
+    height: 70px;
+    width: 70px;
+    text-align: center;
+}
+img{
+    width: 90%;
+    height: auto;
+}
+.jumbotron{
+    text-align: center;
+}

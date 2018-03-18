@@ -14,50 +14,14 @@
 </head>
 <body>
         <header>
-                <nav class="navbar navbar-default">
-                    <a class="navbar-brand" href="index.html">
-                        <span>
-                            <img class="mcpklogo" src="assets/imgs/mcpklogo.png" width="45" height="45" alt="">
-                        </span>
-                    </a>
-                    <a href="index.html">
-                        <button class="btn btn-default btn-lg dropdown-toggle mikehomebutton" type="button">
-        
-                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                        </button>
-                    </a>
-                    <div class="dropdown-container">
-                        <button class="btn btn-default btn-lg dropdown-toggle mikemenubutton" type="button" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="about.html">
-                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;About Me</a>
-                            </li>
-                            <li>
-                                <a href="portfolio.html">
-                                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;Portfolio</a>
-                            </li>
-                            <li>
-                                <a href="contact.html">
-                                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;Contact</a>
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                <a href="index.html">
-                                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;Home</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </header>
+        </header>
     <section>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <h1>Let's Play Hangman!</h1>
+                    <br>
+                    <br>
                 </div>
             </div>
             <div class="row">
@@ -76,9 +40,12 @@
                     </div>
             </div>
             <div class="row">
-                <div class= "col-md-12">
+                <div class= "col-md-8">
                     <div id="keyboard"></div>
 
+                </div>
+                <div id="learnplacement" class= "col-md-4">
+                        <a href="index.html"><button id="play" type="button" class="btn btn-primary">Play Again</button></a>
                 </div>
             </div>
         </div>
@@ -95,13 +62,13 @@
     <script>
         
         var words = {
-            1 : { word: 'rottweiler', description: 'Type of Dog', url: 'assets/images/rottweiler.jpg', mp3: 'assets/images/barking.mp3'},
-            2 : { word: 'beagle', description : 'Type of Dog', url: 'assets/images/beagle.jpg', mp3: 'assets/images/barking.mp3'},
-            3 : { word: 'bulldog', description : 'Type of Dog', url: 'assets/images/bulldog.jpg', mp3: 'assets/images/barking.mp3'},
-            4 : { word: 'poodle', description : 'Type of Dog', url: 'assets/images/poodle.jpg', mp3: 'assets/images/barking.mp3'},
-            5 : { word: 'doberman', description : 'Type of Dog', url: 'assets/images/doberman.jpg', mp3: 'assets/images/barking.mp3'},
-            6 : { word: 'chihuahua', description : 'Type of Dog', url: 'assets/images/chihuahua.jpeg', mp3: 'assets/images/barking.mp3'},
-            7 : { word: 'boxer', description : 'Type of Dog', url: 'assets/images/boxer.jpg', mp3: 'assets/images/barking.mp3'}
+            1 : { word: 'rottweiler', description: 'Type of Dog', img: 'assets/images/rottweiler.jpg', mp3: 'assets/images/barking.mp3', url: 'https://en.wikipedia.org/wiki/List_of_dog_breeds'},
+            2 : { word: 'beagle', description : 'Type of Dog', img: 'assets/images/beagle.jpg', mp3: 'assets/images/barking.mp3', url: 'https://en.wikipedia.org/wiki/List_of_dog_breeds'},
+            3 : { word: 'bulldog', description : 'Type of Dog', img: 'assets/images/bulldog.jpg', mp3: 'assets/images/barking.mp3', url: 'https://en.wikipedia.org/wiki/List_of_dog_breeds'},
+            4 : { word: 'poodle', description : 'Type of Dog', img: 'assets/images/poodle.jpg', mp3: 'assets/images/barking.mp3', url: 'https://en.wikipedia.org/wiki/List_of_dog_breeds'},
+            5 : { word: 'doberman', description : 'Type of Dog', img: 'assets/images/doberman.jpg', mp3: 'assets/images/barking.mp3', url: 'https://en.wikipedia.org/wiki/List_of_dog_breeds'},
+            6 : { word: 'chihuahua', description : 'Type of Dog', img: 'assets/images/chihuahua.jpeg', mp3: 'assets/images/barking.mp3', url: 'https://en.wikipedia.org/wiki/List_of_dog_breeds'},
+            7 : { word: 'boxer', description : 'Type of Dog', img: 'assets/images/boxer.jpg', mp3: 'assets/images/barking.mp3', url: 'https://en.wikipedia.org/wiki/List_of_dog_breeds'}
         };
 
         
@@ -123,6 +90,8 @@
         var wordArray  = Object.keys(words);
         var wordIndex  = Math.floor(Math.random() * wordArray.length);
         var randomKey    = wordArray[wordIndex];
+
+        document.getElementById("play").disabled = true;
 
         var randomWord  = words[randomKey]; 
         var remainingGuessValue = 10;
@@ -162,10 +131,11 @@
                     // you win :(
                     if(document.getElementById('hiddenWord').innerHTML.indexOf('_') === -1){
                         alert("You win!");
-                        document.getElementById("hangman-img").src= randomWord.url;
+                        document.getElementById("hangman-img").src= randomWord.img;
                         var audio = new Audio(randomWord.mp3);
                         audio.play();
-
+                        document.getElementById("learnplacement").innerHTML += '<a href="' + randomWord.url + '"><button id="learn" type="button" class="btn btn-primary">Learn More</button></a>'
+                        document.getElementById("play").disabled = false;
                     }
                 }
                 // incorrect guess :(
@@ -181,6 +151,7 @@
                         if(remainingGuessValue === 0){
                         alert("You Lose!");
                         document.getElementById('hiddenWord').innerHTML = randomWord.word;
+                        document.getElementById("learnplacement").innerHTML += '<a href="' + randomWord.url + '"><button id="learn" type="button" class="btn btn-primary">Learn More</button></a>'
                     }
                 }
 

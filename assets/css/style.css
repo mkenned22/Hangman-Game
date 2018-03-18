@@ -72,3 +72,8 @@ img{
 h1 {
     text-align: center;
 }
+
+#play, #learn{
+    height: 70px;
+    width: 120px;
+}
